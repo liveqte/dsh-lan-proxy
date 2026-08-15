@@ -5,6 +5,14 @@
   开关、状态与启动日志直接嵌入 dsh 设置页，随 dsh 启停，无需单独进程。
 </p>
 
+## 安装
+
+```bash
+dsh plugin --profile web add "github:liveqte/dsh-lan-proxy#main"
+```
+
+bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设置页导航「局域网反代」一级菜单出现，启动日志无 `plugin tree failed to load`。
+
 ## 功能
 
 | 能力 | 说明 |
@@ -20,14 +28,6 @@
 设置页「局域网反代」一级菜单面板（监听已开启时）：
 
 ![局域网反代设置面板](docs/preview/settings-tab.png)
-
-## 安装
-
-```bash
-dsh plugin --profile web add "github:liveqte/dsh-lan-proxy#main"
-```
-
-bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设置页导航「局域网反代」一级菜单出现，启动日志无 `plugin tree failed to load`。
 
 ## 使用
 
