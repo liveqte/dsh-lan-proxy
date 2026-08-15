@@ -1,7 +1,7 @@
 {
   "name": "dsh-plugin-lan-proxy",
   "version": "0.1.0",
-  "description": "dsh 局域网反代插件：把 dsh 的回环 Web UI 通过 0.0.0.0 反代暴露到局域网，开关/状态/启动日志直接嵌入 dsh 设置的「插件」区。",
+  "description": "dsh 局域网反代插件：把 dsh 的回环 Web UI 通过 0.0.0.0 反代暴露到局域网，开关/状态/启动日志直接嵌入 dsh 设置页。",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

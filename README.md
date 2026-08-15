@@ -2,7 +2,7 @@
 
 <p align="center">
   把 dsh 只监听回环地址的 Web UI 通过 <code>0.0.0.0</code> 反代暴露到局域网；
-  开关、状态与启动日志直接嵌入 dsh 设置页「插件」区，随 dsh 启停，无需单独进程。
+  开关、状态与启动日志直接嵌入 dsh 设置页，随 dsh 启停，无需单独进程。
 </p>
 
 ## 功能
@@ -10,14 +10,14 @@
 | 能力 | 说明 |
 | --- | --- |
 | 局域网反代 | 将 dsh Web UI 同时监听 `0.0.0.0:<port>`，局域网内任何设备经 `http://<局域网IP>:<port>/` 访问 |
-| 免配置开关 | 设置页「插件」区「局域网反代」tab 一键开关，即时热启停，无需重启 dsh |
+| 免配置开关 | 设置页「局域网反代」tab 一键开关，即时热启停，无需重启 dsh |
 | 端口配置 | tab 内直接修改监听端口与上游端口，保存即生效 |
 | 协议适配 | 自动改写 Host/Origin 为回环、桥接 WebSocket（RFC6455 帧编解码）、注入 `crypto.randomUUID` polyfill（局域网 HTTP 非安全上下文缺失） |
 | 状态与日志 | 2 秒轮询的运行状态、上游可达性探测、局域网地址列表与启动日志，内置「重启反代」按钮 |
 
 ## 界面预览
 
-设置页「局域网反代」面板（监听已开启时）：
+设置页「局域网反代」一级菜单面板（监听已开启时）：
 
 ![局域网反代设置面板](docs/preview/settings-tab.png)
 
@@ -27,12 +27,11 @@
 dsh plugin --profile web add "github:liveqte/dsh-lan-proxy#main"
 ```
 
-bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设置页「插件」区出现
-「局域网反代」tab，启动日志无 `plugin tree failed to load`。
+bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设置页导航「局域网反代」一级菜单出现，启动日志无 `plugin tree failed to load`。
 
 ## 使用
 
-- **开关**：设置页 →「插件」→「局域网反代」tab，切换「监听局域网访问」。
+- **开关**：设置页 →「局域网反代」tab，切换「监听局域网访问」。
   页面开关的即时状态写入运行时文件（`$DSH_HOME/profiles/web/lan-proxy.runtime.json`，
   优先级高于配置默认值），立即生效。
 - **局域网访问**：`http://<局域网IP>:<监听端口>/`。
