@@ -1,0 +1,5 @@
+# bundle 组合层：声明自身为 profile 的一个插件行。
+# 配置默认值由插件入口（lib/index.js 的 apply 兜底）提供；用户覆盖写 profile 层。
+- insert:
+    - id: lan-proxy
+      name: dsh-plugin-lan-proxy
