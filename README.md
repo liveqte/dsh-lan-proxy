@@ -54,6 +54,7 @@ bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设
 
 ## 插件管理
 
-已装插件用 plugin-registry 的**薄控制台**管理（浏览器面板）：管理 profile 插件
-安装态（bundle 层栈 + insert 行 + 启停），无需手改配置。安装：
+已装插件用 plugin-registry 的浏览器管理面板（轻量控制台）统一管理：查看、
+安装、卸载插件，调整 bundle 层栈与 insert 行，启停插件，全程无需手改配置文件。
+安装：
 `dsh plugin --profile web add <plugin-registry>/packages/plugin/console`
