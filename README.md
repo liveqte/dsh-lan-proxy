@@ -15,6 +15,12 @@
 | 协议适配 | 自动改写 Host/Origin 为回环、桥接 WebSocket（RFC6455 帧编解码）、注入 `crypto.randomUUID` polyfill（局域网 HTTP 非安全上下文缺失） |
 | 状态与日志 | 2 秒轮询的运行状态、上游可达性探测、局域网地址列表与启动日志，内置「重启反代」按钮 |
 
+## 界面预览
+
+设置页「局域网反代」面板（监听已开启时）：
+
+![局域网反代设置面板](docs/preview/settings-tab.png)
+
 ## 安装
 
 ```bash
