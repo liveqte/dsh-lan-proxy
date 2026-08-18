@@ -1,5 +1,16 @@
-# bundle 组合层：声明自身为 profile 的一个插件行。
-# 配置默认值由插件入口（lib/index.js 的 apply 兜底）提供；用户覆盖写 profile 层。
+# bundle 组合层：声明自身为 profile 的一个插件行，并把工作区目录选择
+# 固定为网页端内嵌 browse（远程/局域网访问时 OS 原生对话框会弹在无人值守的
+# 宿主屏幕上，无法操作）。官方 auto 行按 webServer 回环绑定会选 native；
+# 本插件存在即表示部署面向远程浏览器，故禁用 auto 并挂载 browse 双面
+# （host 列举/创建 + client 「选择工作区目录」对话框）。固定交互的官方切点
+# 见 dsh-host-directory-picker-auto README。
+- id: directory-picker
+  disabled: true
+
 - insert:
     - id: lan-proxy
       name: dsh-plugin-lan-proxy
+    - id: directory-picker-browse
+      name: '@deepseek-ai/dsh-host-directory-picker-browse'
+    - id: directory-picker-browse-surface
+      name: '@deepseek-ai/dsh-client-ui-directory-picker-browse'
