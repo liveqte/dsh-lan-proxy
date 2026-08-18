@@ -52,7 +52,6 @@ bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设
 | `enabled` | `false` | 监听局域网访问（配置默认值；页面开关优先级更高并持久化到运行时文件） |
 | `port` | `3080` | 反代监听端口（所有网卡） |
 | `upstreamPort` | `0` | 上游端口，`0` = 自动取 dsh 实际监听端口 |
-| `statusPath` | `/__lan-proxy` | JSON API 前缀（设置页 tab 的数据面，保持默认即可） |
 | `maxLogLines` | `500` | 页面日志缓冲行数 |
 
 配置覆盖写在 profile 层的 `cordis.patch.yml`（`id: lan-proxy` 行的 `config`），
