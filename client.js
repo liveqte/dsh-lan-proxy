@@ -236,6 +236,22 @@ card: { border: "1px solid " + C.borderSoft, borderRadius: 8, padding: "10px 12p
 					: jsxs("span", { children: [jsx("span", { style: Object.assign({}, styles.dot, styles.dotOff) }), " 上游不可达：" + (p.error || ("HTTP " + p.status)) + (st.state === "listening" ? "（反代在跑仍不可达，可能端口不一致）" : "")] });
 			}
 
+			var bypassRows = null;
+			if (st && st.bypass && st.bypass.length) {
+				bypassRows = st.bypass.map(function (r, i) {
+					var ok = !r.lastError;
+					return jsxs("div", { key: "b" + i, style: styles.row, children: [
+						jsx("span", { style: Object.assign({}, styles.dot, ok ? styles.dotOn : styles.dotOff) }),
+						jsx("code", { style: styles.kbd, children: r.id }),
+						r.enabled ? null : jsx("span", { style: styles.muted, children: "（已停用）" }),
+						jsx("span", { style: styles.muted, children: " · 命中 " + (r.hits || 0) + " 次" }),
+						r.lastError ? jsx("span", { style: styles.warn, children: " · " + r.lastError }) : null
+					] });
+				});
+			} else if (st) {
+				bypassRows = jsx("div", { style: styles.muted, children: "（无规则）" });
+			}
+
 			var logRows = (logs.length ? logs : [{ ts: 0, level: "info", msg: st ? "（暂无日志，等待活动…）" : "加载中…" }]).map(function (l, i) {
 				var cls = l.level === "warn" ? styles.lnWarn : l.level === "error" ? styles.lnError : styles.lnInfo;
 				return jsxs("div", { key: "l" + i, style: cls, children: [
@@ -295,6 +311,11 @@ jsx("div", { style: styles.card, children: [
 				jsx("div", { style: styles.card, children: [
 					jsx("div", { style: styles.title, children: "上游可达性" }),
 					probeNode || jsx("span", { style: styles.muted, children: "读取中…" })
+				] }),
+				jsx("div", { style: styles.card, children: [
+					jsx("div", { style: styles.title, children: "前端改写规则（bypass）" }),
+					bypassRows || jsx("span", { style: styles.muted, children: "读取中…" }),
+					jsx("div", { style: styles.muted, children: "转发 /plugins/*/client.js 时按规则表改写字节，解除非回环来源的设置页封锁；未命中说明官方代码已改动，需更新规则。" })
 				] }),
 				jsx("div", { style: styles.card, children: [
 					jsxs("div", { style: styles.row, children: [

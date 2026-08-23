@@ -53,9 +53,29 @@ bundle 层栈在启动时组合，装完**重启 dsh web** 生效。验证：设
 | `port` | `3080` | 反代监听端口（所有网卡） |
 | `upstreamPort` | `0` | 上游端口，`0` = 自动取 dsh 实际监听端口 |
 | `maxLogLines` | `500` | 页面日志缓冲行数 |
+| `bypassRules` | 见下 | 前端 JS 改写规则表（屏蔽 dsh 对非回环来源的设置页封锁） |
 
 配置覆盖写在 profile 层的 `cordis.patch.yml`（`id: lan-proxy` 行的 `config`），
 不需要修改仓库内文件。
+
+### 设置页非回环封锁的绕过（bypass 规则）
+
+dsh 0.1.x 的浏览器端只为回环地址加载设置面（`connection.isLoopback`），从局域网
+访问「设置 → 模型」会得到：`加载提供方目录失败: settings are unavailable in
+this browser`。反代在转发 `/plugins/<id>/client.js` 字节流时，按规则表改写其
+JS，把封锁判定固定为回环；服务端 `/api` 信任栅栏按 Host 头判定，反代已把 Host
+改回 `127.0.0.1`，因此服务端天然放行。这是改动浏览器实际执行字节的补丁，与插件
+加载顺序无关。
+
+内置规则（dsh 0.1.x）：
+
+| id | 改写目标 | 动作 |
+| --- | --- | --- |
+| `dsh-client-connection:isLoopback-mirror` | 把 `dsh-client-connection` client 里的 `isLoopback: pageLocation…` 改为 `isLoopback: true` | 设置/模型/凭据面视为回环，正常读写 |
+
+官方换一种封锁方式时，在配置里加一条 `find`/`replace` 规则即可（或覆盖
+`bypassRules` 表），旧规则 `find` 不中会自动跳过并在日志面板提示。规则状态
+（命中次数/最后错误）出现在「局域网反代」设置页的运行状态里。
 
 ## 插件管理
 
