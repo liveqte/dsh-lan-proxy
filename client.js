@@ -306,8 +306,11 @@ jsx("div", { style: styles.card, children: [
 			] }),
 			jsx("div", { style: styles.card, children: [
 				jsx("div", { style: styles.title, children: "局域网访问地址" }),
-					addrRows || jsx("div", { style: styles.muted, children: "读取中…" })
-				] }),
+				addrRows || jsx("div", { style: styles.muted, children: "读取中…" }),
+				jsx("div", { style: styles.muted, children: st && st.auth === "auto"
+					? "局域网设备首次访问将自动完成浏览器授权，无需手动打开 token 链接。"
+					: "首次访问需用 dsh 启动时打印的带 token 链接完成一次授权。" })
+			] }),
 				jsx("div", { style: styles.card, children: [
 					jsx("div", { style: styles.title, children: "上游可达性" }),
 					probeNode || jsx("span", { style: styles.muted, children: "读取中…" })
